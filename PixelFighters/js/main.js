@@ -145,7 +145,7 @@ function create() {
     this.physics.add.overlap(player1, traps, hitTrap, null, this);
     this.physics.add.overlap(player2, traps, hitTrap, null, this);
 
-
+ //test 
 
     // Set up input controls
     cursors = this.input.keyboard.createCursorKeys();
