@@ -159,34 +159,48 @@ function create() {
         loop: true
     });
 
-    // Power-up spawning event
-    this.time.addEvent({
-        delay: 12000,
-        callback: function () {
-            const items = {
-                'pack-a-punch': 0xff0000,
-                'touch-of-death': 0x00ff00,
-                'speed-boost': 0x0000ff,
-                'super-jump': 0xffff00,
-                'extra-mana': 0xff00ff,
-                'health-potion': 0x00ffff
-            };
-            const selectedItemKey = Phaser.Math.RND.pick(Object.keys(items));
-            const item = this.physics.add.sprite(Phaser.Math.Between(0, config.width), 0, selectedItemKey);
-            item.setTint(items[selectedItemKey]);
-            item.setVelocityY(50);
-            item.body.gravity.y = 20;
-            item.setData('key', selectedItemKey);
+    // Power-Up Spawning Event
+this.time.addEvent({
+    delay: 8000,  // Time in milliseconds between spawns
+    callback: function () {
+        // Define power-up items and their colors
+        const items = {
+            'pack-a-punch': 0xff0000,
+            'touch-of-death': 0x00ff00,
+            'speed-boost': 0x0000ff,
+            'super-jump': 0xffff00,
+            'extra-mana': 0xff00ff,
+            'health-potion': 0x00ffff
+        };
 
-            // Ensure that items collide with platforms
-            this.physics.add.collider(item, platforms);
+        // Randomly pick an item
+        const selectedItemKey = Phaser.Math.RND.pick(Object.keys(items));
+        const item = this.physics.add.sprite(Phaser.Math.Between(0, config.width), 0, selectedItemKey);
 
-            this.physics.add.overlap(player1, item, collectItem, null, this);
-            this.physics.add.overlap(player2, item, collectItem, null, this);
-        },
-        callbackScope: this,
-        loop: true
-    });
+        // Set the item's color and physics properties
+        item.setTint(items[selectedItemKey]);
+        item.setScale(0.5);  // Set the size to half
+        item.setVelocityY(30);
+        item.body.gravity.y = 20;
+        item.setData('key', selectedItemKey);
+
+        // Ensure that items collide with platforms
+        this.physics.add.collider(item, platforms);
+
+        // Set up overlap detection for item collection
+        this.physics.add.overlap(player1, item, collectItem, null, this);
+        this.physics.add.overlap(player2, item, collectItem, null, this);
+
+        // Set up a timer to destroy the item after 10 seconds
+        this.time.delayedCall(10000, function () {
+            if (item && item.active) {
+                item.destroy();
+            }
+        });
+    },
+    callbackScope: this,
+    loop: true
+});
 
     // Adjust camera settings
     this.cameras.main.setBounds(0, 0, 512, 480);
@@ -195,17 +209,79 @@ function create() {
 }
 
 function hitLava(player, lava) {
-    if (!gameOver) {
-        console.log(`${player === player1 ? 'Player 1' : 'Player 2'} fell into the lava. Instant Game Over.`);
-        endGame.call(this, player === player1 ? 'Player 2' : 'Player 1');
+    if (!player.lavaContact) {
+        player.lavaContact = true;
+
+        // Apply continuous damage every second while in contact with lava
+        player.lavaDamageTimer = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                if (!player.lavaContact) {
+                    player.lavaContact = true;
+                    player.health -= 5; // Assuming player.health is the actual health property
+                    console.log(`${player === player1 ? 'Player 1' : 'Player 2'} touched lava and is taking damage. Health: ${player.health}`);
+                    updateHealthText(player === player1 ? player1HealthText : player2HealthText, player.health);
+            
+                    if (player.health <= 0) {
+                        player.health = 1; // Ensure the player doesn't die from lava
+                        updateHealthText(player === player1 ? player1HealthText : player2HealthText, player.health);
+                        endGame(player === player1 ? 'Player 2' : 'Player 1');
+                    }
+                }
+            },
+            callbackScope: this,
+            loop: true
+        });
+
+        console.log(`${player === player1 ? 'Player 1' : 'Player 2'} touched lava and is taking continuous damage.`);
+    }
+}
+
+function leaveLava(player, lava) {
+    if (player.lavaContact) {
+        player.lavaContact = false;
+        if (player.lavaDamageTimer) {
+            player.lavaDamageTimer.remove(false); // Stop the lava damage event
+            player.lavaDamageTimer = null; // Clear the reference to the timer
+        }
+        console.log(`${player === player1 ? 'Player 1' : 'Player 2'} left the lava and stopped taking damage.`);
     }
 }
 
 function hitTrap(player, trap) {
-    if (!gameOver) {
-        console.log(`${player === player1 ? 'Player 1' : 'Player 2'} hit a trap at (${trap.x}, ${trap.y}). Instant Game Over.`);
-        endGame.call(this, player === player1 ? 'Player 2' : 'Player 1');
+    if (!player.trapContact) {
+        player.trapContact = true;
+
+        // Disable player movement for 1.5 seconds
+        player.setVelocityX(0);
+        player.setVelocityY(0);
+        player.body.moves = false;
+
+        this.time.delayedCall(1500, () => {
+            player.body.moves = true;
+            player.trapContact = false;
+            console.log(`${player === player1 ? 'Player 1' : 'Player 2'} can move again after being immobilized by the trap.`);
+        }, [], this);
+
+        console.log(`${player === player1 ? 'Player 1' : 'Player 2'} hit a trap and is immobilized.`);
+
+        // Make the trap disappear and respawn after 2 seconds
+        trap.setActive(false).setVisible(false);
+
+        this.time.delayedCall(2000, () => {
+            respawnTrap(trap, this);
+        }, [], this);
     }
+}
+
+function respawnTrap(trap, scene) {
+    // Randomly select new position for the trap
+    const newX = Phaser.Math.Between(50, config.width - 50);
+    const newY = Phaser.Math.Between(50, config.height - 150);
+
+    trap.setPosition(newX, newY);
+    trap.setActive(true).setVisible(true);
+    console.log('Trap has respawned at a new location.');
 }
 
 
@@ -409,13 +485,9 @@ function handlePlayerHit(attacker, target, hitbox, damage) {
             updateHealthText(player2HealthText, player2Health);
         }
 
-        // Deactivate the hitbox after a successful hit
         deactivateHitbox(hitbox);
-
-        // Restart the target character to ensure they remain visible and active
         restartCharacter(target);
 
-        // Check if the target's health has reached 0 and end the game if so
         if (player1Health <= 0) {
             endGame('Player 2');
         } else if (player2Health <= 0) {
