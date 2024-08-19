@@ -54,6 +54,13 @@
 
 ## User Stories
 
+- Our user stories works in the projects as see screenshot to click dropdown image. 
+- 
+  <details>
+    <summary>User Stories screenshot</summary>
+    <img src="PixelFighters/assets/ReadMe_images/User_stories_image.png" style="width:800px" alt="User stories screenshot">
+  </details>
+
 ### Navigation
 
 - As a player, I want to see the title of the game, "Pixel Fighters," immediately upon opening the website, with clear access to options such as "Start," "How to Play," and "About the Game."
@@ -148,6 +155,70 @@ The game uses a vibrant and nostalgic color palette reminiscent of classic 8-bit
 
 ## Features
 
+## Testing manual 
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th>Action</th>
+            <th>Expected Result</th>
+            <th>Actual Results</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th colspan="4">Below are the steps to complete active game</th>
+        </tr>
+        <tr>
+            <td rowspan=5>Active game</td>
+            <td>1. three bottons "Start", "How to play", and "About game" </td>
+            <td>1. User click to open those buttons</td>
+            <td>Works as Expected</td>
+        </tr>
+        <tr>
+            <td>2. Select Characters</td>
+            <td>2. User select the characters</td>
+            <td>Works as Expected</td>
+        </tr>
+        <tr>
+            <td>3. Player 1 Game</td>
+            <td>3. User is player 1 press the keyboard 'D', 'S' and 'D'</td>
+            <td>Works as Expected</td>
+        </tr>
+        <tr>
+            <td>3. Player 2 Game</td>
+             <td>3. User is player 2 press the keyboard the arrows up, down, forward and backward</td>
+            <td>Works as Expected</td>
+        </tr>
+        <tr>
+            <td>4. Who win</td>
+            <td>4. Users can either who win the player and display on the screen</td>
+            <td>Works as Expected</td>
+        </tr>
+        </tbody>
+    </table>
+
+## Technology used
+- HTML5
+- CSS3
+- Javascript
+- [Phaser] (v3.80.1 "Nino")https://phaser.io/download/stable HTML5 Framework
+- [Bootstrap](Version 5.0.2) (https://getbootstrap.com/docs/5.0/getting-started/introduction/) CSS Framework
+- Adobe Photoshop to create design logo and charachers by Robert Quinlan 
+
+  ## Credits
+
+  ## Media
+
+  ### Images:
+   #### I used download images which used free licence as following below links:
+  - [Vecteezy](https://www.vecteezy.com/vector-art/45562049-affiliate-marketing-icon-design) to create logo for our team called "Retro Rookies".
+  - [Logo github](https://github.com/logos) to create logo on the footer pages which it includes link our team github's profile. 
+  - Three image of marval charachers as follow links below:
+    - [Blade characther](https://marvelsnapzone.com/variants/blade-01/)
+    - [Wolverine characher](https://ie.pinterest.com/pin/33214115995401644/)
+    - [Terminator characher](https://ie.pinterest.com/pin/671036413228810134/)
+
 - **Character Selection**: Players can choose their characters from a selection of pixel art heroes.
 - **Health and Mana Bars**: Visual indicators for each player to track health and mana levels.
 - **Power-Ups**: Collectible items that provide temporary boosts such as increased damage, speed, or health.
@@ -204,6 +275,14 @@ Throughout the development of Pixel Fighters, our team encountered several chall
 
 ## Future Improvements
 
+  ### Sound Effects:
+  Background music and sound effects downloaded from [Pixabay](https://pixabay.com/)
+  ## Team
+  - Dimitri Edel [GitHub](https://github.com/dimitri-edel)
+  - Maushum Gurrung [GitHub](https://github.com/grgmausham)
+  - Jesse Lee Ross[GitHub](https://www.github.com/jesseross001)
+  - Robert Quinlan[GitHub](https://github.com/RQISL)
+  - 
 While Pixel Fighters is fully functional, there are several enhancements and features we plan to add in the future:
 
 - **Online Multiplayer:** Implementing an online multiplayer mode where players can battle against each other over the internet.
