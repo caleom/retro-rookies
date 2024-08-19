@@ -15,6 +15,13 @@ The project 'Pixel Fighters' is a one player 2D game built with HTML5, CSS, and 
 ## How to Run
 Simply open `index.html` in a web browser to play the game.
 ## User Stories
+- Our user stories works in the projects as see screenshot to click dropdown image. 
+- 
+  <details>
+    <summary>User Stories screenshot</summary>
+    <img src="PixelFighters/assets/ReadMe_images/User_stories_image.png" style="width:800px" alt="User stories screenshot">
+  </details>
+
 ### Navigation
 - want to see the title of the game 'Pixel Fighters' as soon as I open the website with  access to the options; 'Start', How to Play' and 'About the Game'.
 - want to see a large pixel logo against a plain background and a simple menu so I know the genre of the game
@@ -97,6 +104,49 @@ Simply open `index.html` in a web browser to play the game.
 
 ## Features
 
+## Testing manual 
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th>Action</th>
+            <th>Expected Result</th>
+            <th>Actual Results</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th colspan="4">Below are the steps to complete active game</th>
+        </tr>
+        <tr>
+            <td rowspan=5>Active game</td>
+            <td>1. three bottons "Start", "How to play", and "About game" </td>
+            <td>1. User click to open those buttons</td>
+            <td>Works as Expected</td>
+        </tr>
+        <tr>
+            <td>2. Select Characters</td>
+            <td>2. User select the characters</td>
+            <td>Works as Expected</td>
+        </tr>
+        <tr>
+            <td>3. Player 1 Game</td>
+            <td>3. User is player 1 press the keyboard 'D', 'S' and 'D'</td>
+            <td>Works as Expected</td>
+        </tr>
+        <tr>
+            <td>3. Player 2 Game</td>
+             <td>3. User is player 2 press the keyboard the arrows up, down, forward and backward</td>
+            <td>Works as Expected</td>
+        </tr>
+        <tr>
+            <td>4. Who win</td>
+            <td>4. Users can either who win the player and display on the screen</td>
+            <td>Works as Expected</td>
+        </tr>
+        </tbody>
+    </table>
+
 ## Technology used
 - HTML5
 - CSS3
@@ -106,7 +156,9 @@ Simply open `index.html` in a web browser to play the game.
 - Adobe Photoshop to create design logo and charachers by Robert Quinlan 
 
   ## Credits
+
   ## Media
+
   ### Images:
    #### I used download images which used free licence as following below links:
   - [Vecteezy](https://www.vecteezy.com/vector-art/45562049-affiliate-marketing-icon-design) to create logo for our team called "Retro Rookies".
